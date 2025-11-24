@@ -1,85 +1,199 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link href="./css/reset.css" rel="stylesheet" />
-    <link href="./css/style.css" rel="stylesheet" />
+    <title>按鈕與彈窗範例</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: system-ui, sans-serif;
+        background-color: #f5f5f5;
+      }
+
+      #openModalBtn {
+        padding: 10px 24px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background-color: #ffffff;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 999;
+      }
+      .modal-overlay.show {
+        display: flex;
+      }
+
+      .modal {
+        background: #fff;
+        border-radius: 6px;
+        max-width: 700px;
+        width: 90%;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        position: relative;
+      }
+
+      .modal-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid #eee;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 10px;
+        right: 14px;
+        border: none;
+        background: transparent;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .modal-body {
+        padding: 16px 20px;
+        overflow-y: auto;
+        font-size: 14px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+      }
+
+      .modal-footer {
+        padding: 12px 20px 16px;
+        border-top: 1px solid #eee;
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .start-btn,
+      .confirm-btn {
+        padding: 6px 16px;
+        border-radius: 4px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      #typeContent {
+        font-size: 15px;
+        line-height: 1.8;
+        white-space: pre-line;
+      }
+    </style>
   </head>
   <body>
-    <header class="bar">
-      <div class="container">
-        <span class="brand-badge">NTUA VCD</span>
-      </div>
-    </header>
+    <button id="openModalBtn">開啟彈窗</button>
 
-    <!-- 標題區 -->
-    <section class="hero-strip">
-      <div class="container">
-        <div class="hero-chip">
-          <h1 class="hero-title">設計你的靈感：創意影像工作坊報名</h1>
-          <p class="hero-sub">
-            想學會用影像說故事？這場工作坊帶你從構思走到動態影像，無論是初學者或創作者，都能找到屬於你的節奏與風格。
-          </p>
+    <!-- 第一彈窗 -->
+    <div id="modalOverlay1" class="modal-overlay">
+      <div class="modal">
+        <div class="modal-header">
+          遠離毒品，珍惜自己
+          <button class="modal-close" id="closeX1">×</button>
+        </div>
+        <div class="modal-body">
+          我第一次接觸毒品，是在家鄉的稻田裡。平常一起打架的男生遞給我一瓶膠水，說：「吸了這個，會像開飛機一樣快樂。」刺鼻的味道讓我立刻跑開，但那句話卻在我腦裡揮之不去。我渴望快樂。
+          回到家，迎接我的永遠是吵架和摔門，沒有人聽我說話。長大後，我越來越討厭上學；沒人關心我，只在乎成績。我越沉默，大人越說我有問題。父母離婚後，我幾乎不再回家。反而是街上的朋友讓我覺得被需要——夜市、吃飯、抽菸、自由，那種被接納的感覺遠勝過家裡一句冷冷的「吃飯了」。
+          後來我們玩得更瘋。第一次真正吸毒，是大哥拍著我肩膀說：「一起爽才叫兄弟。」我想被認同，也想證明自己不是多餘的，所以吸了。K、安、冰……一路往下沉。我用忠誠換取了他們的信任。
+          直到做生意出事那天，大哥把我推到前面：「弟弟，這次你頂一下，我們會等你出來。」我信了。我替他坐牢，他卻消失。獄中斷癮的痛像活剝，冷汗、嘔吐、抽搐，我恨他們，也恨自己。
+          如果可以重新來過，我只想像同齡人一樣，上班、旅遊、談戀愛，而不是在牢房裡熬過每一天。
+          毒品不會帶來快樂；需要靠毒品證明的感情，注定不可靠。
+          不要吸毒，不要踏進去，一次都不要。
+        </div>
+        <div class="modal-footer">
+          <!-- ✔ 已移除確認按鈕 -->
+          <button class="start-btn" id="startTyping">開始</button>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- 表單區 -->
-    <main class="form-wrap">
-      <div class="container">
-        <form class="enroll-form" action="#" method="post" novalidate>
-          <div class="field">
-            <label for="name" class="label">姓名</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              class="input"
-              placeholder="請輸入姓名"
-              required
-            />
-          </div>
-
-          <div class="field">
-            <label for="email" class="label">EMAIL（方便寄送課程資訊）</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              class="input"
-              placeholder="請輸入 email"
-              required
-            />
-          </div>
-
-          <fieldset class="field">
-            <legend class="label">想報名的課程</legend>
-            <div class="radio-group">
-              <label class="radio">
-                <input type="radio" name="course" value="c1" checked />
-                <span class="dot" aria-hidden="true"></span>
-                <span class="text"> 課程名稱01 </span>
-              </label>
-
-              <label class="radio">
-                <input type="radio" name="course" value="c2" />
-                <span class="dot" aria-hidden="true"></span>
-                <span class="text">課程名稱02</span>
-              </label>
-
-              <label class="radio">
-                <input type="radio" name="course" value="c3" />
-                <span class="dot" aria-hidden="true"></span>
-                <span class="text">課程名稱03</span>
-              </label>
-            </div>
-          </fieldset>
-
-          <button class="btn-submit" type="submit">送出</button>
-        </form>
+    <!-- 第二彈窗（打字機效果） -->
+    <div id="modalOverlay2" class="modal-overlay">
+      <div class="modal">
+        <div class="modal-header">
+          故事簡介
+          <button class="modal-close" id="closeX2">×</button>
+        </div>
+        <div class="modal-body">
+          <div id="typeContent"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="confirm-btn" id="confirm2">確認</button>
+        </div>
       </div>
-    </main>
+    </div>
+
+    <script>
+      const openModalBtn = document.getElementById("openModalBtn");
+      const modal1 = document.getElementById("modalOverlay1");
+      const modal2 = document.getElementById("modalOverlay2");
+      const closeX1 = document.getElementById("closeX1");
+      const closeX2 = document.getElementById("closeX2");
+      const confirm2 = document.getElementById("confirm2");
+      const startTyping = document.getElementById("startTyping");
+      const typeContent = document.getElementById("typeContent");
+
+      const typingText = [
+        "本片以第一人稱視角呈現一名誤入毒品深淵的青年，自述吸毒後身心崩塌的歷程。",
+        "畫面以強烈對比與具象化意象，以及生動的旁白，",
+        "引導觀眾沉浸於失控的瞬間，",
+        "感受悔恨與控訴的真心吶喊。",
+      ];
+
+      openModalBtn.onclick = () => modal1.classList.add("show");
+      closeX1.onclick = () => modal1.classList.remove("show");
+
+      closeX2.onclick = () => modal2.classList.remove("show");
+      confirm2.onclick = () => modal2.classList.remove("show");
+
+      function startTypewriter() {
+        typeContent.textContent = "";
+        let lineIndex = 0;
+
+        function typeLine() {
+          if (lineIndex >= typingText.length) return;
+          let line = typingText[lineIndex];
+          let charIndex = 0;
+          let interval = setInterval(() => {
+            typeContent.textContent += line[charIndex];
+            charIndex++;
+            if (charIndex === line.length) {
+              clearInterval(interval);
+              typeContent.textContent += "\n";
+              lineIndex++;
+              setTimeout(typeLine, 400);
+            }
+          }, 45);
+        }
+        typeLine();
+      }
+
+      startTyping.onclick = () => {
+        modal1.classList.remove("show");
+        modal2.classList.add("show");
+        startTypewriter();
+      };
+    </script>
   </body>
 </html>
